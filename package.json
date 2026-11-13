@@ -1,0 +1,51 @@
+{
+  "name": "blog-platform-api",
+  "version": "1.0.0",
+  "description": "Итоговый проект: API блог-платформы (Express, Prisma/PostgreSQL, Redis, JWT, RBAC, Socket.io, Swagger)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "jest --runInBand",
+    "seed": "node prisma/seed.js",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.5",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.1",
+    "helmet": "^8.3.0",
+    "ioredis": "^5.11.1",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.3",
+    "prisma": "^6.19.3",
+    "rate-limit-redis": "^4.3.1",
+    "socket.io": "^4.8.4",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "socket.io-client": "^4.8.4",
+    "supertest": "^7.3.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "<rootDir>/__tests__/**/*.test.js"
+    ],
+    "setupFiles": [
+      "<rootDir>/__tests__/setup.js"
+    ],
+    "globalSetup": "<rootDir>/__tests__/globalSetup.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Блог-чат</title>
+  <link rel="stylesheet" href="/chat.css">
+</head>
+<body>
+  <main>
+    <section id="login-view" class="card">
+      <h1>Вход в чат</h1>
+      <form id="login-form">
+        <input id="email" type="email" placeholder="email" required autocomplete="username">
+        <input id="password" type="password" placeholder="пароль" required autocomplete="current-password">
+        <button type="submit">Войти</button>
+      </form>
+      <p id="login-error" class="error"></p>
+    </section>
+
+    <section id="chat-view" class="hidden">
+      <header>
+        <strong id="me"></strong>
+        <span id="status" class="muted">подключение…</span>
+        <button id="logout" class="link">выйти</button>
+      </header>
+      <div class="layout">
+        <aside class="card">
+          <h2>Онлайн</h2>
+          <ul id="online"></ul>
+          <h2>Комнаты</h2>
+          <ul id="rooms"><li><button class="room active" data-room=""># общий</button></li></ul>
+          <form id="join-form">
+            <input id="room-name" placeholder="название комнаты" required>
+            <button type="submit">Войти</button>
+          </form>
+        </aside>
+        <section class="card chat">
+          <div class="chat-head">
+            <h2 id="current-room"># общий</h2>
+            <button id="leave-room" class="link hidden">покинуть комнату</button>
+          </div>
+          <ul id="messages"></ul>
+          <form id="message-form">
+            <input id="message" placeholder="сообщение…" autocomplete="off" required>
+            <button type="submit">Отправить</button>
+          </form>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/chat.js"></script>
+</body>
+</html>

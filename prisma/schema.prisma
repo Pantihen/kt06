@@ -1,0 +1,75 @@
+generator client {
+  provider      = "prisma-client-js"
+  // native — локальная машина, linux-musl — Docker-образ на Alpine (x86_64 и arm64)
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String
+  password  String
+  role      Role      @default(USER)
+  createdAt DateTime  @default(now())
+  posts     Post[]
+  comments  Comment[]
+  messages  Message[]
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  authorId  Int
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  tags      Tag[]
+  comments  Comment[]
+
+  @@index([authorId])
+  @@index([published, createdAt])
+}
+
+model Tag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  posts Post[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([postId, createdAt])
+}
+
+// Сообщение чата. room = null — общий чат, иначе — имя комнаты
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  room      String?
+  createdAt DateTime @default(now())
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([room, createdAt])
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}

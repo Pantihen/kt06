@@ -1,0 +1,43 @@
+# Render Blueprint: Dashboard -> New -> Blueprint -> выбрать этот репозиторий.
+# Создаёт веб-сервис из Dockerfile, PostgreSQL и Redis (Key Value). Секреты JWT генерируются автоматически.
+services:
+  - type: web
+    name: blog-platform-api
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "1"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: blog-platform-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: blog-platform-redis
+          property: connectionString
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      # Вводятся вручную при создании Blueprint (в репозитории их нет)
+      - key: SEED_ADMIN_EMAIL
+        sync: false
+      - key: SEED_ADMIN_PASSWORD
+        sync: false
+
+  - type: keyvalue
+    name: blog-platform-redis
+    plan: free
+    maxmemoryPolicy: noeviction
+    ipAllowList: [] # доступ только из внутренней сети Render
+
+databases:
+  - name: blog-platform-db
+    plan: free
+    databaseName: blog
+    user: blog
