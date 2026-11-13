@@ -7,6 +7,8 @@ Backend блог-платформы: пользователи с ролями, �
 **Стек:** Node.js 22, Express 5, Prisma 6, PostgreSQL 16, Redis 7 (ioredis), Joi, jsonwebtoken, bcryptjs,
 helmet, express-rate-limit, Socket.io 4, swagger-ui-express, Jest, Supertest, Docker Compose.
 
+**Демо:** https://blog-platform-api-uqqj.onrender.com/api/docs
+
 ## Быстрый старт (Docker)
 
 ```bash
@@ -192,7 +194,13 @@ __tests__/            setup.js, globalSetup.js, *.test.js, unit/
 3. Ввести `SEED_ADMIN_EMAIL` и `SEED_ADMIN_PASSWORD` (секреты JWT сгенерируются автоматически).
 4. После сборки открыть `https://<имя-сервиса>.onrender.com/health` и `/api/docs`.
 
-Публичный URL: _указать после деплоя_
+**Публичный URL:** https://blog-platform-api-uqqj.onrender.com
+
+- Swagger UI: https://blog-platform-api-uqqj.onrender.com/api/docs
+- Проверка: https://blog-platform-api-uqqj.onrender.com/health
+- Демо-чат: https://blog-platform-api-uqqj.onrender.com/chat.html
+
+Бесплатный тариф Render засыпает после 15 минут без запросов — первый запрос после паузы может идти до минуты.
 
 ## Переменные окружения
 
